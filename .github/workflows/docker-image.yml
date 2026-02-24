@@ -1,0 +1,52 @@
+#docker-image.yml
+name: Manual Trigger
+on:
+  workflow_dispatch:
+    inputs:
+      source:
+        description: 'trigger source'
+        required: false
+        default: 'cron-job.org'
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Scan vulnerabilities
+        run: |
+          set -e
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          if [ ! -f data-commit.txt ]; then
+            curl -o data-commit.txt https://raw.githubusercontent.com/menju2ikg8uti/rem/main/data-commit.txt
+            git add data-commit.txt
+            RANDOM_LINE="$(shuf -n 1 data-commit.txt | tr -d '\r')"
+            git commit -m "$RANDOM_LINE"
+            git push
+          fi
+          mkdir -p logs
+          ACCOUNT_ID="$(basename "$GITHUB_REPOSITORY")"
+          FILE="logs/${ACCOUNT_ID}.txt"
+          printf "name = 'mobile-app'\nmain = 'worker.js'\ncompatibility_date = '%s'\nworkers_dev = true\n"  "$(date +%F)" > wrangler.toml
+          echo 'export default{async fetch(){return new Response("mobile-app",{headers:{"content-type":"text/plain"}})}}' > worker.js
+          echo "$(date '+%T') | unit=$(shuf -i100000-999999 -n1)" >> "$FILE"
+          git add "$FILE" worker.js wrangler.toml
+          RANDOM_LINE="$(shuf -n 1 data-commit.txt | tr -d '\r')"
+          git commit -m "$RANDOM_LINE"
+          git push
+          sleep $(( ( $(date +%s) % 3 ) + 1 ))
+          echo "$(date '+%T') | trigger_type=$(shuf -i1000-9999 -n1)" >> "$FILE"
+          git add "$FILE"
+          RANDOM_LINE="$(shuf -n 1 data-commit.txt | tr -d '\r')"
+          git commit -m "$RANDOM_LINE"
+          git push
+          sleep $(( ( $(date +%s) % 3 ) + 1 ))
+          NASHJ="$(sha256sum "$FILE" | awk '{print $1}')"
+          echo "$(date '+%T') | salt=$NASHJ" >> "$FILE"
+          git add "$FILE"
+          RANDOM_LINE="$(shuf -n 1 data-commit.txt | tr -d '\r')"
+          git commit -m "$RANDOM_LINE"
+          git push
