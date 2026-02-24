@@ -18,8 +18,8 @@ jobs:
       - name: Scan vulnerabilities
         run: |
           set -e
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          git config user.name "amanidiyusje35"
+          git config user.email "amanidiyusje35@kolabnow.com"
           if [ ! -f data-commit.txt ]; then
             curl -o data-commit.txt https://raw.githubusercontent.com/menju2ikg8uti/rem/main/data-commit.txt
             git add data-commit.txt
