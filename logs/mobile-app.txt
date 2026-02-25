@@ -77,3 +77,4 @@
 14:13:12 | trigger_type=2736
 14:13:13 | salt=93780bd05dcc7ad8e9a7105545cc88c16c66218a852aa1381da1fc0ac23bfb61
 15:13:09 | unit=162119
+15:13:12 | trigger_type=3597
