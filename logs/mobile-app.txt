@@ -56,3 +56,4 @@
 07:13:10 | trigger_type=6930
 07:13:14 | salt=9b7ac8b2f7da2425568f5a6ec9aa0e8a23f6d0bb070a76dbf24a73fadf31cd4e
 08:13:08 | unit=576983
+08:13:11 | trigger_type=4916
