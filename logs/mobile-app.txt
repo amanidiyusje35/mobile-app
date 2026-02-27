@@ -215,3 +215,4 @@
 13:13:12 | trigger_type=6247
 13:13:13 | salt=a05f3db91eb7ce3ad6f0639160cbea19feb60fe1ad540c8e144d9bc378447c1a
 15:13:09 | unit=656102
+15:13:12 | trigger_type=3700
